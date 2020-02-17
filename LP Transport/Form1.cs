@@ -41,6 +41,14 @@ namespace LP_Transport
 
             }
 
+            // Получаем список доступных портов и заносим в комбобокс
+            comboBox1.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());
+            if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
+            comboBox1.Items.Add("Обновить список");
+            comboBox1.SelectedIndex = 0;
+
+
+            toolStripStatusLabel1.Text = "Для работы запустите прием данных и укажите ip Проводки для переправки данных";
             // Бинд параметров из объекта "LeuzaRegReceiver" в лейблы на форме
             //lbVal1.DataBindings.Add("Text", RegReceiver.DataStorage, "ValZaboiStr", true, DataSourceUpdateMode.OnPropertyChanged);
             //lbVal2.DataBindings.Add("Text", RegReceiver.DataStorage, "ValDolotoStr", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -108,7 +116,7 @@ namespace LP_Transport
 
                 leuzaRegReceiver.UDPtracking(true);
                 //UDPtracking(true);
-
+                toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...",leuzaRegReceiver.SmallProperty[0].Value);
 
             }
             else
@@ -117,6 +125,7 @@ namespace LP_Transport
                 //RegReceiver.UDPtracking(false);
                 leuzaRegReceiver.Stop();
                 //leuzaRegReceiver.UDPtracking(false);
+                toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
             }
         }
 
@@ -298,6 +307,17 @@ namespace LP_Transport
         }
         #endregion
 
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem.ToString() == "Обновить список")
+            {
+                comboBox1.Items.Clear();
+                comboBox1.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());
+                if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
+                comboBox1.Items.Add("Обновить список");
+                comboBox1.SelectedIndex = 0;
+            }
+        }
     }
 
 

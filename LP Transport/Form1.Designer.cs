@@ -28,85 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbVal1 = new System.Windows.Forms.Label();
-            this.lbVal2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lbVal3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.smallPropertyBox6 = new Sys_components.SmallPropertyBox();
             this.smallPropertyBox5 = new Sys_components.SmallPropertyBox();
             this.smallPropertyBox4 = new Sys_components.SmallPropertyBox();
-            this.smallPropertyBox7 = new Sys_components.SmallPropertyBox();
-            this.smallPropertyBox8 = new Sys_components.SmallPropertyBox();
-            this.smallPropertyBox9 = new Sys_components.SmallPropertyBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Забой, м";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Долото, м";
-            // 
-            // lbVal1
-            // 
-            this.lbVal1.AutoSize = true;
-            this.lbVal1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbVal1.Location = new System.Drawing.Point(12, 22);
-            this.lbVal1.Name = "lbVal1";
-            this.lbVal1.Size = new System.Drawing.Size(72, 25);
-            this.lbVal1.TabIndex = 2;
-            this.lbVal1.Text = "Value";
-            // 
-            // lbVal2
-            // 
-            this.lbVal2.AutoSize = true;
-            this.lbVal2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbVal2.Location = new System.Drawing.Point(12, 62);
-            this.lbVal2.Name = "lbVal2";
-            this.lbVal2.Size = new System.Drawing.Size(72, 25);
-            this.lbVal2.TabIndex = 3;
-            this.lbVal2.Text = "Value";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(168, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(50, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "IP адрес";
-            // 
-            // lbVal3
-            // 
-            this.lbVal3.AutoSize = true;
-            this.lbVal3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbVal3.Location = new System.Drawing.Point(166, 22);
-            this.lbVal3.Name = "lbVal3";
-            this.lbVal3.Size = new System.Drawing.Size(72, 25);
-            this.lbVal3.TabIndex = 2;
-            this.lbVal3.Text = "Value";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(463, 9);
+            this.button1.Location = new System.Drawing.Point(3, 40);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(153, 23);
             this.button1.TabIndex = 5;
             this.button1.Text = "Старт";
             this.button1.UseVisualStyleBackColor = true;
@@ -114,30 +60,25 @@
             // 
             // panel2
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.Controls.Add(this.smallPropertyBox6);
             this.panel2.Controls.Add(this.smallPropertyBox5);
             this.panel2.Controls.Add(this.smallPropertyBox4);
-            this.panel2.Controls.Add(this.smallPropertyBox7);
-            this.panel2.Controls.Add(this.smallPropertyBox8);
-            this.panel2.Controls.Add(this.smallPropertyBox9);
-            this.panel2.Location = new System.Drawing.Point(17, 90);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(475, 213);
+            this.panel2.Size = new System.Drawing.Size(390, 141);
             this.panel2.TabIndex = 108;
             // 
             // smallPropertyBox6
             // 
             this.smallPropertyBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox6.Location = new System.Drawing.Point(0, 10);
+            this.smallPropertyBox6.Location = new System.Drawing.Point(10, 10);
             this.smallPropertyBox6.Margin = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox6.Name = "smallPropertyBox6";
             this.smallPropertyBox6.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox6.PropertyName = null;
-            this.smallPropertyBox6.Size = new System.Drawing.Size(474, 28);
+            this.smallPropertyBox6.Size = new System.Drawing.Size(379, 28);
             this.smallPropertyBox6.TabIndex = 5;
             this.smallPropertyBox6.Value = null;
             // 
@@ -145,12 +86,12 @@
             // 
             this.smallPropertyBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox5.Location = new System.Drawing.Point(0, 40);
+            this.smallPropertyBox5.Location = new System.Drawing.Point(10, 40);
             this.smallPropertyBox5.Margin = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox5.Name = "smallPropertyBox5";
             this.smallPropertyBox5.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox5.PropertyName = null;
-            this.smallPropertyBox5.Size = new System.Drawing.Size(474, 28);
+            this.smallPropertyBox5.Size = new System.Drawing.Size(379, 28);
             this.smallPropertyBox5.TabIndex = 4;
             this.smallPropertyBox5.Value = null;
             // 
@@ -158,93 +99,114 @@
             // 
             this.smallPropertyBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox4.Location = new System.Drawing.Point(0, 70);
+            this.smallPropertyBox4.Location = new System.Drawing.Point(10, 70);
             this.smallPropertyBox4.Margin = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox4.Name = "smallPropertyBox4";
             this.smallPropertyBox4.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox4.PropertyName = null;
-            this.smallPropertyBox4.Size = new System.Drawing.Size(474, 28);
+            this.smallPropertyBox4.Size = new System.Drawing.Size(379, 28);
             this.smallPropertyBox4.TabIndex = 3;
             this.smallPropertyBox4.Value = null;
             // 
-            // smallPropertyBox7
+            // splitContainer1
             // 
-            this.smallPropertyBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox7.Location = new System.Drawing.Point(0, 100);
-            this.smallPropertyBox7.Margin = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox7.Name = "smallPropertyBox7";
-            this.smallPropertyBox7.Padding = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox7.PropertyName = null;
-            this.smallPropertyBox7.Size = new System.Drawing.Size(474, 28);
-            this.smallPropertyBox7.TabIndex = 2;
-            this.smallPropertyBox7.Value = null;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // smallPropertyBox8
+            // splitContainer1.Panel1
             // 
-            this.smallPropertyBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox8.Location = new System.Drawing.Point(0, 130);
-            this.smallPropertyBox8.Margin = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox8.Name = "smallPropertyBox8";
-            this.smallPropertyBox8.Padding = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox8.PropertyName = null;
-            this.smallPropertyBox8.Size = new System.Drawing.Size(474, 28);
-            this.smallPropertyBox8.TabIndex = 1;
-            this.smallPropertyBox8.Value = null;
+            this.splitContainer1.Panel1.Controls.Add(this.panel2);
             // 
-            // smallPropertyBox9
+            // splitContainer1.Panel2
             // 
-            this.smallPropertyBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.smallPropertyBox9.Location = new System.Drawing.Point(0, 160);
-            this.smallPropertyBox9.Margin = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox9.Name = "smallPropertyBox9";
-            this.smallPropertyBox9.Padding = new System.Windows.Forms.Padding(1);
-            this.smallPropertyBox9.PropertyName = null;
-            this.smallPropertyBox9.Size = new System.Drawing.Size(474, 28);
-            this.smallPropertyBox9.TabIndex = 0;
-            this.smallPropertyBox9.Value = null;
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
+            this.splitContainer1.Size = new System.Drawing.Size(553, 141);
+            this.splitContainer1.SplitterDistance = 390;
+            this.splitContainer1.TabIndex = 109;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(159, 141);
+            this.panel1.TabIndex = 110;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(3, 10);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(153, 21);
+            this.comboBox1.TabIndex = 6;
+            this.comboBox1.SelectedValueChanged += new System.EventHandler(this.comboBox1_SelectedValueChanged);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 119);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(553, 22);
+            this.statusStrip1.TabIndex = 110;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(3, 70);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(153, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Проводка";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(686, 469);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lbVal2);
-            this.Controls.Add(this.lbVal3);
-            this.Controls.Add(this.lbVal1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(400, 180);
+            this.ClientSize = new System.Drawing.Size(553, 141);
+            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(450, 180);
             this.Name = "Form1";
             this.Text = "Значения глубины";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel2.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lbVal1;
-        private System.Windows.Forms.Label lbVal2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label lbVal3;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel2;
         private Sys_components.SmallPropertyBox smallPropertyBox6;
         private Sys_components.SmallPropertyBox smallPropertyBox5;
         private Sys_components.SmallPropertyBox smallPropertyBox4;
-        private Sys_components.SmallPropertyBox smallPropertyBox7;
-        private Sys_components.SmallPropertyBox smallPropertyBox8;
-        private Sys_components.SmallPropertyBox smallPropertyBox9;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -163,7 +163,7 @@ namespace LP_Transport
                             string subString = @"UDataStorage";
                             int indexOfSubstring = response.ToString().IndexOf(subString); // равно 6
 
-                            //SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
+                            SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
                             SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
                             break;
                         }
@@ -172,10 +172,10 @@ namespace LP_Transport
                     while (stream.DataAvailable); // пока данные есть в потоке
 
 
-                    if (stream.DataAvailable)
-                    {
-                        SmallProperty[1].Value = k++.ToString();
-                    }
+                    //if (stream.DataAvailable)
+                    //{
+                    //    SmallProperty[1].Value = k++.ToString();
+                    //}
 
                     response.Clear();
                     stream.Dispose();
