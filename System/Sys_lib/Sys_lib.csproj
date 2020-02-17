@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Update="ComSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ComSettings.Designer.cs">
+      <DependentUpon>ComSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Elements\PropertyBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Elements\PropertyBox.Designer.cs">
+      <DependentUpon>PropertyBox.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Elements\SmallPropertyBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Elements\SmallPropertyBox.Designer.cs">
+      <DependentUpon>SmallPropertyBox.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="ComSettings.resx">
+      <DependentUpon>ComSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Elements\PropertyBox.resx">
+      <DependentUpon>PropertyBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Elements\SmallPropertyBox.resx">
+      <DependentUpon>SmallPropertyBox.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

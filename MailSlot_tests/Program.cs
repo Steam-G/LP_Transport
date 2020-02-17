@@ -10,7 +10,7 @@ namespace MailSlot_tests
     {
         static void Main(string[] args)
         {
-            Handle 
+            //Handle 
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSlot_tests", "MailSlot_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCP test", "TCP test\TCP test.csproj", "{96A27E91-5749-412E-BC46-790CE0FE1C4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sys_components", "System\Sys_components\Sys_components.csproj", "{4DA7FE7F-20E2-4BCA-A64B-39E3841C950B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{96A27E91-5749-412E-BC46-790CE0FE1C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A27E91-5749-412E-BC46-790CE0FE1C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96A27E91-5749-412E-BC46-790CE0FE1C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DA7FE7F-20E2-4BCA-A64B-39E3841C950B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DA7FE7F-20E2-4BCA-A64B-39E3841C950B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DA7FE7F-20E2-4BCA-A64B-39E3841C950B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DA7FE7F-20E2-4BCA-A64B-39E3841C950B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

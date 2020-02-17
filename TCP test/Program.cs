@@ -8,20 +8,29 @@ namespace TCP_test
     class Program
     {
         
-        private const string server = "192.168.1.82";
+        //private const string server = "192.168.1.82";
 
         static void Main(string[] args)
         {
+            UDPtracking();
+            Console.ReadLine();
+        }
+
+        private static void UDPtracking()
+        {
+            
             int port = 138;
             UdpClient server = null;
             try
             {
+
                 server = new UdpClient(port);
                 // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
                 IPEndPoint remoteEP = null;
                 // Получаем и отдаем сразу. Эхо сервер
                 while (true)
                 {
+
                     byte[] bytes = server.Receive(ref remoteEP);
                     //server.Send(bytes, bytes.Length, remoteEP);
                     string results = Encoding.UTF8.GetString(bytes);
@@ -31,12 +40,14 @@ namespace TCP_test
 
                     if (indexOfSubstring > 0)
                     {
-                        Console.WriteLine("ip: {0}, offset: {1}", remoteEP.Address, indexOfSubstring);
+                        
+                        //Console.WriteLine("ip: {0}, offset: {1}", remoteEP.Address, indexOfSubstring);
                         string ipServer = remoteEP.Address.ToString();
                         tcpClientReadPacket(ipServer);
+                        //break;
                     }
 
-                    
+
                     //Console.WriteLine(remoteEP.ToString() + " отправил:" + results);
                     if (results.ToLower().Equals("stop server")) break;
                 }
@@ -56,6 +67,7 @@ namespace TCP_test
 
         private static void tcpClientReadPacket(string ip)
         {
+            
             const int port = 65004;
 
             try
@@ -82,9 +94,12 @@ namespace TCP_test
                         string subString = @"UDataStorage";
                         int indexOfSubstring = response.ToString().IndexOf(subString); // равно 6
                         // Convert byte array elements to double values.
-                        Console.WriteLine(indexOfSubstring);
+                        Console.Clear();
+                        Console.WriteLine("ip: {0}, indexSub: {1}", ip, indexOfSubstring);
+                        //Console.WriteLine(indexOfSubstring);
                         BAToDouble(data, indexOfSubstring + 19 - 1514); // попал, поправить отображение числа
                         BAToDouble(data, indexOfSubstring + 19 + 8 - 1514);
+                        break;
                     }
                 }
                 while (stream.DataAvailable); // пока данные есть в потоке
@@ -121,7 +136,7 @@ namespace TCP_test
             //Console.WriteLine(msg);
 
             Console.WriteLine("Запрос завершен...");
-
+           
 
 
             //Console.Read();
@@ -191,7 +206,7 @@ namespace TCP_test
 
             //Console.WriteLine(formatter, index,
             //    BitConverter.ToString(bytes, index, 8), value);
-            Console.WriteLine(value.ToString());
+            Console.WriteLine(value.ToString("#.##"));
             }
 
             // Display a byte array, using multiple lines if necessary.
