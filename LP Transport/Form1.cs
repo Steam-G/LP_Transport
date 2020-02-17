@@ -49,6 +49,7 @@ namespace LP_Transport
 
 
             toolStripStatusLabel1.Text = "Для работы запустите прием данных и укажите ip Проводки для переправки данных";
+            
             // Бинд параметров из объекта "LeuzaRegReceiver" в лейблы на форме
             //lbVal1.DataBindings.Add("Text", RegReceiver.DataStorage, "ValZaboiStr", true, DataSourceUpdateMode.OnPropertyChanged);
             //lbVal2.DataBindings.Add("Text", RegReceiver.DataStorage, "ValDolotoStr", true, DataSourceUpdateMode.OnPropertyChanged);
@@ -116,8 +117,11 @@ namespace LP_Transport
 
                 leuzaRegReceiver.UDPtracking(true);
                 //UDPtracking(true);
-                toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...",leuzaRegReceiver.SmallProperty[0].Value);
 
+                // При старте в строке состояния должно быть зеленое сообщение, полужирным шрифтом
+                toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...",leuzaRegReceiver.SmallProperty[0].Value);
+                toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Bold);
+                toolStripStatusLabel1.ForeColor = Color.Green;
             }
             else
             {
@@ -125,7 +129,11 @@ namespace LP_Transport
                 //RegReceiver.UDPtracking(false);
                 leuzaRegReceiver.Stop();
                 //leuzaRegReceiver.UDPtracking(false);
+
+                // По остановке опроса сообщение в строке состояния будет перекрашено в серый цвет и изменится на обычный вид
                 toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
+                toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
+                toolStripStatusLabel1.ForeColor = Color.Gray;
             }
         }
 
