@@ -68,10 +68,12 @@ namespace LP_Transport
             }
         }
 
-        async public void SearchIP()
+        async public void SearchIP(ComboBox comboBox)
         {
+            comboBox.Enabled = false;
             int port = 138;
             UdpClient server = null;
+            List<string> bufIP = new List<string>();
             int iter = 0;
 
             try
@@ -94,7 +96,7 @@ namespace LP_Transport
                     {
                         string ipServer = remoteEP.Address.ToString();
 
-                        _iplist.Add(ipServer);
+                        bufIP.Add(ipServer);
 
                     }
 
@@ -103,7 +105,11 @@ namespace LP_Transport
                     //if (results.ToLower().Equals("stop server")) break;
                     //Thread.Sleep(100);
                     iter++;
+                    string progress = new String('.', iter);
                     await Task.Delay(100);
+                    comboBox.Text = progress;
+                    //comboBox.Items.Clear();
+                    //comboBox.Items.Add(progress);
                 }
                         return;
             }
@@ -114,6 +120,14 @@ namespace LP_Transport
             finally
             {
                 if (server != null) server.Close();
+                _iplist = new List<string>(bufIP.Distinct());
+
+                comboBox.Items.Clear();
+                comboBox.Items.AddRange(IPList.ToArray());
+                if (comboBox.Items.Count == 0) comboBox.Items.Add("не найдено");
+                comboBox.Items.Add("Обновить список");
+                comboBox.SelectedIndex = 0;
+                comboBox.Enabled = true;
             }
         }
 
@@ -181,6 +195,7 @@ namespace LP_Transport
         }
 
 
+            bool status = true;
 
         async public void tcpClientReadPacket(string ip)
         {
@@ -191,13 +206,14 @@ namespace LP_Transport
             //готовим токен отмены
             _tokenSource = new CancellationTokenSource();
             CancellationToken cancelToken = _tokenSource.Token;
+            status = true;
 
             try
             {
                 byte[] buf = new byte[4096];
                 int i = 0; // это номер пакета данных, регистрация шлет их несколькими пачками
 
-                while (true)
+                while (status)
                 {
                     TcpClient client = new TcpClient();
                     
@@ -253,6 +269,7 @@ namespace LP_Transport
             catch (OperationCanceledException)
             {
                 MessageBox.Show("Задача отменена.");
+                status = false;
             }
             catch (Exception e)
             {

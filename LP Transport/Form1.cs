@@ -320,13 +320,18 @@ namespace LP_Transport
         {
             if (comboBox1.SelectedItem.ToString() == "Обновить список")
             {
-                comboBox1.Items.Clear();
-                leuzaRegReceiver.SearchIP();
-                comboBox1.Items.AddRange(leuzaRegReceiver.IPList.ToArray());
-                if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
-                comboBox1.Items.Add("Обновить список");
-                comboBox1.SelectedIndex = 0;
+                leuzaRegReceiver.SearchIP((ComboBox)sender);
+                //comboBox1.Items.Clear();
+                //comboBox1.Items.AddRange(leuzaRegReceiver.IPList.ToArray());
+                //if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
+                //comboBox1.Items.Add("Обновить список");
+                //comboBox1.SelectedIndex = 0;
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            leuzaRegReceiver.Stop();
         }
     }
 
