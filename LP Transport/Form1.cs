@@ -17,8 +17,6 @@ namespace LP_Transport
     public partial class Form1 : Form
     {
         LeuzaRegReceiver leuzaRegReceiver = null;
-        //DataStorage dataStorage = new DataStorage();
-                            //LeuzaRegReceiver RegReceiver = new LeuzaRegReceiver();
         
         public Form1()
         {
@@ -28,96 +26,35 @@ namespace LP_Transport
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            //Передаем объект для сбора параметров в объект работы с сетевым трафиком
-            //RegReceiver.DataStorage = new DataStorage();
             leuzaRegReceiver = new LeuzaRegReceiver();
             leuzaRegReceiver.Init();
+
             // Привязка элементов на экране к элементам объекта
             for (int i = 0; i < leuzaRegReceiver.SmallProperty.Count; i++)
             {
                 panel2.Controls[i].DataBindings.Add("PropertyName", leuzaRegReceiver.SmallProperty[i], "PropertyName", true, DataSourceUpdateMode.OnPropertyChanged);
                 panel2.Controls[i].DataBindings.Add("Value", leuzaRegReceiver.SmallProperty[i], "Value", true, DataSourceUpdateMode.OnPropertyChanged);
-
             }
 
-            // Получаем список доступных портов и заносим в комбобокс
-            comboBox1.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());
-            if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
-            comboBox1.Items.Add("Обновить список");
-            comboBox1.SelectedIndex = 0;
-
+            //Запускаем прослушивание UDP пакетов на 138 порту, IP адреса всех соответствующих некоторым критериям источников заносим в список
+            leuzaRegReceiver.SearchIP(comboBox1);
 
             toolStripStatusLabel1.Text = "Для работы запустите прием данных и укажите ip Проводки для переправки данных";
-            
-            // Бинд параметров из объекта "LeuzaRegReceiver" в лейблы на форме
-            //lbVal1.DataBindings.Add("Text", RegReceiver.DataStorage, "ValZaboiStr", true, DataSourceUpdateMode.OnPropertyChanged);
-            //lbVal2.DataBindings.Add("Text", RegReceiver.DataStorage, "ValDolotoStr", true, DataSourceUpdateMode.OnPropertyChanged);
-            //lbVal3.DataBindings.Add("Text", RegReceiver.DataStorage, "IpAddr", true, DataSourceUpdateMode.OnPropertyChanged);
-            //new Thread(() =>
-            //{
-            //    Invoke((MethodInvoker)(() =>
-            //    {
-            //        UDPtracking();
-            //    }));
-            //}).Start();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            #region Пробники
-
-            //UDPtracking(lbVal1, lbVal2, lbVal3);
-            //UDPtracking(true);
-            //new Thread(() => { Invoke((MethodInvoker)(() => { label1.Text = "проверка"; })); }).Start();
-            //new Thread(() => { Invoke((MethodInvoker)(() => { UDPtracking(true); })); }).Start();
-
-
-            //await Task.Factory.StartNew(() =>
-            //{
-            //    UDPtracking(true);
-            //});
-
-
-
-            //new Thread(() =>
-            //{
-            //    Action action = () =>
-            //    {
-            //        RegReceiver.UDPtracking(true);
-            //    };
-            //    if (InvokeRequired)
-            //        Invoke(action);
-            //    else
-            //        action();
-
-            //}).Start();
-
-
-            //RegReceiver.UDPtracking(true);
-            #endregion
-
             // работа параметрами кнопки, на которую нажали
             var b = sender as Button;
             if (b.Text == "Старт")
             {
                 b.Text = "Стоп";
-                //b.Enabled = false;
-                //new Thread(() => 
-                //{
-                //    Invoke((MethodInvoker)(() =>
-                //    {
-                    
-                //    //lbVal1.Text = dataStorage.ValZaboiStr;
-
-                //    }));
-                //}) { IsBackground = false }.Start();
-
-                //leuzaRegReceiver.Start("192.168.1.5");
-
+  
                 leuzaRegReceiver.UDPtracking(true);
                 leuzaRegReceiver.tcpClientReadPacket(comboBox1.SelectedItem.ToString());
-                //UDPtracking(true);
+
+                //Заблокируем выбор IP адреса, пока опрос не будет остановлен
+                comboBox1.Enabled = false;
 
                 // При старте в строке состояния должно быть зеленое сообщение, полужирным шрифтом
                 toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...",leuzaRegReceiver.SmallProperty[0].Value);
@@ -127,10 +64,9 @@ namespace LP_Transport
             else
             {
                 b.Text = "Старт";
-                //RegReceiver.UDPtracking(false);
                 leuzaRegReceiver.Stop();
-                //leuzaRegReceiver.UDPtracking(false);
 
+                comboBox1.Enabled = true;
                 // По остановке опроса сообщение в строке состояния будет перекрашено в серый цвет и изменится на обычный вид
                 toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
                 toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
@@ -318,30 +254,46 @@ namespace LP_Transport
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem.ToString() == "Обновить список")
-            {
-                //new Thread(() =>
-                //{
-                //    Invoke((MethodInvoker)(() =>
-                //    {
-
-                        //lbVal1.Text = dataStorage.ValZaboiStr;
-                        leuzaRegReceiver.SearchIP((ComboBox)sender);
-
-                //    }));
-                //})
-                //{ IsBackground = false }.Start();
-                //comboBox1.Items.Clear();
-                //comboBox1.Items.AddRange(leuzaRegReceiver.IPList.ToArray());
-                //if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
-                //comboBox1.Items.Add("Обновить список");
-                //comboBox1.SelectedIndex = 0;
-            }
+            if (comboBox1.SelectedItem.ToString() == "Обновить список") leuzaRegReceiver.SearchIP((ComboBox)sender);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             leuzaRegReceiver.Stop();
+        }
+
+        private void Form1_Deactivate(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.ShowInTaskbar = false;
+                notifyIcon1.Visible = true;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        private void openMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+            }
+        }
+
+        private void closeMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 

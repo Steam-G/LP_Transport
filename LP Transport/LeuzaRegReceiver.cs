@@ -64,7 +64,7 @@ namespace LP_Transport
             //Просто вносим в элементы на форме названия параметров
             for (ushort i = 0; i < ParameterNames.Length; i++)
             {
-                SmallProperty.Add(new AlphaDataClass() { PropertyName = i.ToString() + ") " + ParameterNames[i] });
+                SmallProperty.Add(new AlphaDataClass() { PropertyName = /*i.ToString() + ") " +*/ ParameterNames[i] });
             }
         }
 
@@ -88,8 +88,7 @@ namespace LP_Transport
                 {
                     UdpReceiveResult x = await server.ReceiveAsync();
                     byte[] bytes = x.Buffer;
-                    //byte[] bytes = server.Receive(ref remoteEP);
-                    //server.Send(bytes, bytes.Length, remoteEP);
+
                     string results = Encoding.UTF8.GetString(bytes);
 
                     string subString = @"\MAILSLOT\chromatograph";
@@ -97,7 +96,6 @@ namespace LP_Transport
 
                     if (indexOfSubstring > 0)
                     {
-                        //string ipServer = remoteEP.Address.ToString();
                         string ipServer = x.RemoteEndPoint.Address.ToString();
 
                         bufIP.Add(ipServer);
@@ -137,10 +135,6 @@ namespace LP_Transport
 
         async public void UDPtracking(bool start)
         {
-            //await Task.Run(() =>
-            //{
-            // Что-то делаем
-
             int port = 138;
             UdpClient server = null;
 
@@ -151,10 +145,7 @@ namespace LP_Transport
                 // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
                 IPEndPoint remoteEP = null;
 
-                //ThreadPool.QueueUserWorkItem(new WaitCallback((obj) =>
-                //{
-
-                // Получаем и отдаем сразу. Эхо сервер
+                // Получаем и обрабатываем сразу.
                 while (start)
                 {
                     byte[] bytes = server.Receive(ref remoteEP);
@@ -166,25 +157,16 @@ namespace LP_Transport
 
                     if (indexOfSubstring > 0)
                     {
-
-                        //Console.WriteLine("ip: {0}, offset: {1}", remoteEP.Address, indexOfSubstring);
                         string ipServer = remoteEP.Address.ToString();
 
-                        //lbVal3.Text = ipServer;
                         _dataStorage.IpAddr = ipServer;
 
-                        //new Thread(() => { }) { IsBackground = true }.Start();
                         tcpClientReadPacket(ipServer);
                         return;
                     }
 
-
-                    //Console.WriteLine(remoteEP.ToString() + " отправил:" + results);
-                        //if (results.ToLower().Equals("stop server")) break;
-                    //Thread.Sleep(100);
                     await Task.Delay(100);
                 }
-                //}));
             }
             catch (Exception ex)
             {
@@ -194,12 +176,10 @@ namespace LP_Transport
             {
                 if (server != null) server.Close();
             }
-            //tcpClientReadPacket();
-            //});
         }
 
 
-            bool status = true;
+        bool status = true;
 
         async public void tcpClientReadPacket(string ip)
         {
@@ -289,18 +269,6 @@ namespace LP_Transport
 
             SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
             SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
-            
-            // Convert byte array elements to double values.
-            //Console.WriteLine(indexOfSubstring);
-
-            //taStorage.ValZaboiStr = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
-            //taStorage.ValDoloto = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514);
-
-            //lbVal1.Text = value1.ToString();
-            //lbVal2.Text = value2.ToString();
-            
-            //DataStorage.ValZaboi = value1;
-            //DataStorage.ValDoloto = value2;
         }
 
 

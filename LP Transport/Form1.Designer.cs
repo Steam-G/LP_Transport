@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.smallPropertyBox6 = new Sys_components.SmallPropertyBox();
@@ -41,6 +43,11 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -50,6 +57,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -70,7 +78,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(388, 141);
+            this.panel2.Size = new System.Drawing.Size(345, 141);
             this.panel2.TabIndex = 108;
             // 
             // smallPropertyBox6
@@ -82,7 +90,7 @@
             this.smallPropertyBox6.Name = "smallPropertyBox6";
             this.smallPropertyBox6.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox6.PropertyName = null;
-            this.smallPropertyBox6.Size = new System.Drawing.Size(377, 28);
+            this.smallPropertyBox6.Size = new System.Drawing.Size(334, 28);
             this.smallPropertyBox6.TabIndex = 5;
             this.smallPropertyBox6.Value = null;
             // 
@@ -95,7 +103,7 @@
             this.smallPropertyBox5.Name = "smallPropertyBox5";
             this.smallPropertyBox5.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox5.PropertyName = null;
-            this.smallPropertyBox5.Size = new System.Drawing.Size(377, 28);
+            this.smallPropertyBox5.Size = new System.Drawing.Size(334, 28);
             this.smallPropertyBox5.TabIndex = 4;
             this.smallPropertyBox5.Value = null;
             // 
@@ -108,7 +116,7 @@
             this.smallPropertyBox4.Name = "smallPropertyBox4";
             this.smallPropertyBox4.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox4.PropertyName = null;
-            this.smallPropertyBox4.Size = new System.Drawing.Size(377, 28);
+            this.smallPropertyBox4.Size = new System.Drawing.Size(334, 28);
             this.smallPropertyBox4.TabIndex = 3;
             this.smallPropertyBox4.Value = null;
             // 
@@ -126,8 +134,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(807, 141);
-            this.splitContainer1.SplitterDistance = 388;
+            this.splitContainer1.Size = new System.Drawing.Size(764, 141);
+            this.splitContainer1.SplitterDistance = 345;
             this.splitContainer1.TabIndex = 109;
             // 
             // panel1
@@ -185,7 +193,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 119);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(807, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(764, 22);
             this.statusStrip1.TabIndex = 110;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -197,16 +205,56 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "LP Transport";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openMenuItem,
+            this.toolStripSeparator1,
+            this.closeMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(199, 54);
+            this.contextMenuStrip1.Text = "Открыть LP-Transport";
+            // 
+            // openMenuItem
+            // 
+            this.openMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.openMenuItem.Name = "openMenuItem";
+            this.openMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.openMenuItem.Text = "Открыть LP-Transport";
+            this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(195, 6);
+            // 
+            // closeMenuItem
+            // 
+            this.closeMenuItem.Name = "closeMenuItem";
+            this.closeMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.closeMenuItem.Text = "Выход";
+            this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 141);
+            this.ClientSize = new System.Drawing.Size(764, 141);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
-            this.MinimumSize = new System.Drawing.Size(450, 180);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(780, 180);
             this.Name = "Form1";
-            this.Text = "Значения глубины";
+            this.Text = "LP Transport";
+            this.Deactivate += new System.EventHandler(this.Form1_Deactivate);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.panel2.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -218,6 +266,7 @@
             this.groupBox1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -237,6 +286,11 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem openMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
     }
 }
 
