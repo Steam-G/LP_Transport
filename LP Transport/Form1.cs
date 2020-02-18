@@ -320,7 +320,17 @@ namespace LP_Transport
         {
             if (comboBox1.SelectedItem.ToString() == "Обновить список")
             {
-                leuzaRegReceiver.SearchIP((ComboBox)sender);
+                //new Thread(() =>
+                //{
+                //    Invoke((MethodInvoker)(() =>
+                //    {
+
+                        //lbVal1.Text = dataStorage.ValZaboiStr;
+                        leuzaRegReceiver.SearchIP((ComboBox)sender);
+
+                //    }));
+                //})
+                //{ IsBackground = false }.Start();
                 //comboBox1.Items.Clear();
                 //comboBox1.Items.AddRange(leuzaRegReceiver.IPList.ToArray());
                 //if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");

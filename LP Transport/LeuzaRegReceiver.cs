@@ -79,13 +79,16 @@ namespace LP_Transport
             try
             {
                 server = new UdpClient(port);
+                
                 // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
                 IPEndPoint remoteEP = null;
 
                 // Получаем и отдаем сразу. Эхо сервер
                 while (iter<10)
                 {
-                    byte[] bytes = server.Receive(ref remoteEP);
+                    UdpReceiveResult x = await server.ReceiveAsync();
+                    byte[] bytes = x.Buffer;
+                    //byte[] bytes = server.Receive(ref remoteEP);
                     //server.Send(bytes, bytes.Length, remoteEP);
                     string results = Encoding.UTF8.GetString(bytes);
 
@@ -94,7 +97,8 @@ namespace LP_Transport
 
                     if (indexOfSubstring > 0)
                     {
-                        string ipServer = remoteEP.Address.ToString();
+                        //string ipServer = remoteEP.Address.ToString();
+                        string ipServer = x.RemoteEndPoint.Address.ToString();
 
                         bufIP.Add(ipServer);
 
