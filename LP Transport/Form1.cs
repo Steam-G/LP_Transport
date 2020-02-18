@@ -103,19 +103,20 @@ namespace LP_Transport
             {
                 b.Text = "Стоп";
                 //b.Enabled = false;
-                new Thread(() => 
-                {
-                    Invoke((MethodInvoker)(() =>
-                    {
+                //new Thread(() => 
+                //{
+                //    Invoke((MethodInvoker)(() =>
+                //    {
                     
-                    //lbVal1.Text = dataStorage.ValZaboiStr;
+                //    //lbVal1.Text = dataStorage.ValZaboiStr;
 
-                    }));
-                }) { IsBackground = false }.Start();
+                //    }));
+                //}) { IsBackground = false }.Start();
 
                 //leuzaRegReceiver.Start("192.168.1.5");
 
                 leuzaRegReceiver.UDPtracking(true);
+                leuzaRegReceiver.tcpClientReadPacket(comboBox1.SelectedItem.ToString());
                 //UDPtracking(true);
 
                 // При старте в строке состояния должно быть зеленое сообщение, полужирным шрифтом
@@ -158,7 +159,7 @@ namespace LP_Transport
 
                 //ThreadPool.QueueUserWorkItem(new WaitCallback((obj) =>
                 //{
-                int i = 0;
+                //int i = 0;
                     // Получаем и отдаем сразу. Эхо сервер
                     while (start)
                     {
@@ -179,7 +180,7 @@ namespace LP_Transport
                             //lbVal3.Text = ipServer;
                             //dataStorage.IpAddr = ipServer;
                             //tcpClientReadPacket(ipServer, dataStorage);
-                        leuzaRegReceiver.tcpClientReadPacket(ipServer, true);
+                        leuzaRegReceiver.tcpClientReadPacket(ipServer);
                         }
 
 
@@ -320,7 +321,8 @@ namespace LP_Transport
             if (comboBox1.SelectedItem.ToString() == "Обновить список")
             {
                 comboBox1.Items.Clear();
-                comboBox1.Items.AddRange(System.IO.Ports.SerialPort.GetPortNames());
+                leuzaRegReceiver.SearchIP();
+                comboBox1.Items.AddRange(leuzaRegReceiver.IPList.ToArray());
                 if (comboBox1.Items.Count == 0) comboBox1.Items.Add("не найдено");
                 comboBox1.Items.Add("Обновить список");
                 comboBox1.SelectedIndex = 0;

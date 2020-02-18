@@ -17,7 +17,7 @@ namespace LP_Transport
         // Объект с параметрами (далото, забой)
         private DataStorage _dataStorage = new DataStorage();
         // Список объектов, включающих в себя имя параметра и его значение (PropertyName, Value)
-        private List<AlphaDataClass> _SmallProperty = new List<Sys_components.Elements.AlphaDataClass>();
+        private List<AlphaDataClass> _SmallProperty = new List<AlphaDataClass>();
 
         public DataStorage DataStorage
         {
@@ -37,6 +37,22 @@ namespace LP_Transport
             "Долото, м"
         };
 
+        public string[] testIP =
+        {
+            "192.168.0.1",
+            "192.168.0.2",
+            "192.168.0.3",
+            "192.168.0.4",
+            "192.168.0.5"
+        };
+
+        public List<string> IPList
+        {
+            get { return _iplist; }
+            set { _iplist = value; }
+        }
+        private List<string> _iplist = new List<string>();
+
         //источник токена отмены
         CancellationTokenSource _tokenSource;
 
@@ -49,6 +65,55 @@ namespace LP_Transport
             for (ushort i = 0; i < ParameterNames.Length; i++)
             {
                 SmallProperty.Add(new AlphaDataClass() { PropertyName = i.ToString() + ") " + ParameterNames[i] });
+            }
+        }
+
+        async public void SearchIP()
+        {
+            int port = 138;
+            UdpClient server = null;
+            int iter = 0;
+
+            try
+            {
+                server = new UdpClient(port);
+                // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
+                IPEndPoint remoteEP = null;
+
+                // Получаем и отдаем сразу. Эхо сервер
+                while (iter<10)
+                {
+                    byte[] bytes = server.Receive(ref remoteEP);
+                    //server.Send(bytes, bytes.Length, remoteEP);
+                    string results = Encoding.UTF8.GetString(bytes);
+
+                    string subString = @"\MAILSLOT\chromatograph";
+                    int indexOfSubstring = results.IndexOf(subString); // равно 6
+
+                    if (indexOfSubstring > 0)
+                    {
+                        string ipServer = remoteEP.Address.ToString();
+
+                        _iplist.Add(ipServer);
+
+                    }
+
+
+                    //Console.WriteLine(remoteEP.ToString() + " отправил:" + results);
+                    //if (results.ToLower().Equals("stop server")) break;
+                    //Thread.Sleep(100);
+                    iter++;
+                    await Task.Delay(100);
+                }
+                        return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (server != null) server.Close();
             }
         }
 
@@ -91,7 +156,7 @@ namespace LP_Transport
                         _dataStorage.IpAddr = ipServer;
 
                         //new Thread(() => { }) { IsBackground = true }.Start();
-                        tcpClientReadPacket(ipServer, true);
+                        tcpClientReadPacket(ipServer);
                         return;
                     }
 
@@ -116,29 +181,23 @@ namespace LP_Transport
         }
 
 
-        bool state = false;
-        async public void tcpClientReadPacket(string ip, bool inwork)
-        {
 
+        async public void tcpClientReadPacket(string ip)
+        {
             SmallProperty[0].Value = ip;
             //_dataStorage.IpAddr = ip;
             const int port = 65004;
-            int k = 0;
-
-            state = inwork;
 
             //готовим токен отмены
             _tokenSource = new CancellationTokenSource();
             CancellationToken cancelToken = _tokenSource.Token;
 
-
             try
             {
-
                 byte[] buf = new byte[4096];
                 int i = 0; // это номер пакета данных, регистрация шлет их несколькими пачками
 
-                while (state)
+                while (true)
                 {
                     TcpClient client = new TcpClient();
                     
@@ -171,12 +230,6 @@ namespace LP_Transport
                     }
                     while (stream.DataAvailable); // пока данные есть в потоке
 
-
-                    //if (stream.DataAvailable)
-                    //{
-                    //    SmallProperty[1].Value = k++.ToString();
-                    //}
-
                     response.Clear();
                     stream.Dispose();
                     // Закрываем потоки
@@ -188,7 +241,6 @@ namespace LP_Transport
                     //здесь будет выброшено исключение в случае нажатия на кнопку отмены
                     cancelToken.ThrowIfCancellationRequested();
 
-                    //await Task.Delay(1000);
                 }
 
 
@@ -207,9 +259,6 @@ namespace LP_Transport
                 MessageBox.Show(e.Message);
                 //Console.WriteLine("Exception: {0}", e.Message);
             }
-
-
-            //Console.WriteLine("Запрос завершен...");
         }
 
         private void FindAndReadUDataStorage(byte[] data, StringBuilder response)
@@ -235,6 +284,8 @@ namespace LP_Transport
 
 
         private bool b;
+        
+
         public void Start(string ip)
         {
             SmallProperty[0].Value = ip;
