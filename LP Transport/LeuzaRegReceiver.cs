@@ -2,6 +2,7 @@
 using Sys_components.Elements;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -30,20 +31,18 @@ namespace LP_Transport
             set { _SmallProperty = value; }
         }
 
+        public ToolStripStatusLabel StatusLabel
+        {
+            get { return _StatusLabel; }
+            set { _StatusLabel = value; }
+        }
+        private ToolStripStatusLabel _StatusLabel;
+
         // Перечисляем названия параметров, с которыми работаем
         private string[] ParameterNames = {
             "IP адрес",
             "Забой, м",
             "Долото, м"
-        };
-
-        public string[] testIP =
-        {
-            "192.168.0.1",
-            "192.168.0.2",
-            "192.168.0.3",
-            "192.168.0.4",
-            "192.168.0.5"
         };
 
         public List<string> IPList
@@ -70,6 +69,7 @@ namespace LP_Transport
 
         async public void SearchIP(ComboBox comboBox)
         {
+            //При поиске IP адресов блокируем выбор и ввод
             comboBox.Enabled = false;
             int port = 138;
             UdpClient server = null;
@@ -79,9 +79,6 @@ namespace LP_Transport
             try
             {
                 server = new UdpClient(port);
-                
-                // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
-                IPEndPoint remoteEP = null;
 
                 // Получаем и отдаем сразу. Эхо сервер
                 while (iter<10)
@@ -102,16 +99,12 @@ namespace LP_Transport
 
                     }
 
-
-                    //Console.WriteLine(remoteEP.ToString() + " отправил:" + results);
-                    //if (results.ToLower().Equals("stop server")) break;
-                    //Thread.Sleep(100);
+                    //Индикатор прогресса поиска адресов
                     iter++;
                     string progress = new String('.', iter);
                     await Task.Delay(100);
                     comboBox.Text = progress;
-                    //comboBox.Items.Clear();
-                    //comboBox.Items.Add(progress);
+
                 }
                         return;
             }
@@ -133,53 +126,8 @@ namespace LP_Transport
             }
         }
 
-        async public void UDPtracking(bool start)
-        {
-            int port = 138;
-            UdpClient server = null;
-
-
-            try
-            {
-                server = new UdpClient(port);
-                // Создаем переменную IPEndPoint, чтобы передать ссылку на нее в Receive()
-                IPEndPoint remoteEP = null;
-
-                // Получаем и обрабатываем сразу.
-                while (start)
-                {
-                    byte[] bytes = server.Receive(ref remoteEP);
-                    //server.Send(bytes, bytes.Length, remoteEP);
-                    string results = Encoding.UTF8.GetString(bytes);
-
-                    string subString = @"\MAILSLOT\chromatograph";
-                    int indexOfSubstring = results.IndexOf(subString); // равно 6
-
-                    if (indexOfSubstring > 0)
-                    {
-                        string ipServer = remoteEP.Address.ToString();
-
-                        _dataStorage.IpAddr = ipServer;
-
-                        tcpClientReadPacket(ipServer);
-                        return;
-                    }
-
-                    await Task.Delay(100);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (server != null) server.Close();
-            }
-        }
-
-
         bool status = true;
+        
 
         async public void tcpClientReadPacket(string ip)
         {
@@ -222,6 +170,7 @@ namespace LP_Transport
                             string subString = @"UDataStorage";
                             int indexOfSubstring = response.ToString().IndexOf(subString); // равно 6
 
+                            Def.ZABOI = (decimal)BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514);
                             SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
                             SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
                             break;
@@ -252,7 +201,10 @@ namespace LP_Transport
             }
             catch (OperationCanceledException)
             {
-                MessageBox.Show("Задача отменена.");
+                _StatusLabel.Text = string.Format("IP: {0}, прием данных завершен.", ip);
+                _StatusLabel.Font = new Font(_StatusLabel.Name, 9, FontStyle.Regular);
+                _StatusLabel.ForeColor = Color.Gray;
+                //MessageBox.Show("Задача отменена.");
                 status = false;
             }
             catch (Exception e)
@@ -262,6 +214,9 @@ namespace LP_Transport
             }
         }
 
+
+
+        // не используется, но выглядит наглядно
         private void FindAndReadUDataStorage(byte[] data, StringBuilder response)
         {
             string subString = @"UDataStorage";
@@ -271,75 +226,9 @@ namespace LP_Transport
             SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
         }
 
-
-        private bool b;
-        
-
-        public void Start(string ip)
+        public void tcpClientReadPacketStop()
         {
-            SmallProperty[0].Value = ip;
-           //DataStorage.IpAddr = ip;
-            const int port = 65004;
-
-            b = true;
-            try
-            {
-                TcpClient client = new TcpClient();
-                client.Connect(ip, port);
-                byte[] data = new byte[1514];
-                StringBuilder response = new StringBuilder();
-                NetworkStream stream = client.GetStream();
-
-                byte[] buf = new byte[4096];
-                int i = 0; // это номер пакета данных, регистрация шлет их несколькими пачками
-
-                ThreadPool.QueueUserWorkItem(new WaitCallback((obj) =>
-                {
-                    while (b)
-                    {
-                        if (stream.DataAvailable)
-                        {
-                            int bytes = stream.Read(data, 0, data.Length);
-                            response.Append(Encoding.Default.GetString(data, 0, bytes));
-                            Thread.Sleep(300); // Delay 100ms
-                            i++;
-                            if (i == 2) // интересует второй пакет, там расположены забой и долото
-                            {
-                                string subString = @"UDataStorage";
-                                int indexOfSubstring = response.ToString().IndexOf(subString); // равно 6
-
-                                //SmallProperty[1].Value = i.ToString();
-                                //SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
-                                //SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
-                            }
-
-                        }
-                        //Thread.Sleep(1000); // Delay 100ms
-                        int gg = 25;
-                        SmallProperty[2].Value = gg.ToString();
-                    }
-                    if (b == false)
-                    {
-                        response.Clear();
-                        stream.Dispose();
-                        // Закрываем потоки
-                        stream.Close();
-                        client.Close();
-                    }
-                }));
-            }
-            catch (Exception ex)
-            {
-                //throw ex;
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        public void Stop()
-        {
-            b = false;
             _tokenSource.Cancel();
-            //serialPort1.Close();
         }
     }
 }

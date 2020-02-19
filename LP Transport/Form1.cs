@@ -16,7 +16,8 @@ namespace LP_Transport
 {
     public partial class Form1 : Form
     {
-        LeuzaRegReceiver leuzaRegReceiver = null;
+        ProcTelem ProcTelem;
+      LeuzaRegReceiver leuzaRegReceiver = null;
         
         public Form1()
         {
@@ -28,6 +29,7 @@ namespace LP_Transport
         {
             leuzaRegReceiver = new LeuzaRegReceiver();
             leuzaRegReceiver.Init();
+            leuzaRegReceiver.StatusLabel = toolStripStatusLabel1;
 
             // Привязка элементов на экране к элементам объекта
             for (int i = 0; i < leuzaRegReceiver.SmallProperty.Count; i++)
@@ -40,17 +42,19 @@ namespace LP_Transport
             leuzaRegReceiver.SearchIP(comboBox1);
 
             toolStripStatusLabel1.Text = "Для работы запустите прием данных и укажите ip Проводки для переправки данных";
+            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             // работа параметрами кнопки, на которую нажали
             var b = sender as Button;
-            if (b.Text == "Старт")
+            if (b.Text == "Запустить прием")
             {
-                b.Text = "Стоп";
+                b.Text = "Остановить прием";
   
-                leuzaRegReceiver.UDPtracking(true);
+                //leuzaRegReceiver.UDPtracking(true);
                 leuzaRegReceiver.tcpClientReadPacket(comboBox1.SelectedItem.ToString());
 
                 //Заблокируем выбор IP адреса, пока опрос не будет остановлен
@@ -63,18 +67,51 @@ namespace LP_Transport
             }
             else
             {
-                b.Text = "Старт";
-                leuzaRegReceiver.Stop();
+                b.Text = "Запустить прием";
+                leuzaRegReceiver.tcpClientReadPacketStop();
 
                 comboBox1.Enabled = true;
                 // По остановке опроса сообщение в строке состояния будет перекрашено в серый цвет и изменится на обычный вид
-                toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
-                toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
-                toolStripStatusLabel1.ForeColor = Color.Gray;
+                //toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
+                //toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
+                //toolStripStatusLabel1.ForeColor = Color.Gray;
             }
         }
 
-        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // работа параметрами кнопки, на которую нажали
+            var b = sender as Button;
+            if (b.Text == "Запустить передачу")
+            {
+                b.Text = "Остановить передачу";
+
+                Properties.Settings.Default.tcpIP = textBox1.Text;
+                ProcTelem = new ProcTelem();
+                
+                //Заблокируем выбор IP адреса, пока опрос не будет остановлен
+                textBox1.Enabled = false;
+
+                // При старте в строке состояния должно быть зеленое сообщение, полужирным шрифтом
+                //toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...", leuzaRegReceiver.SmallProperty[0].Value);
+                //toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Bold);
+                //toolStripStatusLabel1.ForeColor = Color.Green;
+            }
+            else
+            {
+                b.Text = "Запустить передачу";
+
+                
+                ProcTelem.IsOn = false;
+                textBox1.Enabled = true;
+                // По остановке опроса сообщение в строке состояния будет перекрашено в серый цвет и изменится на обычный вид
+                //toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
+                //toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
+                //toolStripStatusLabel1.ForeColor = Color.Gray;
+            }
+        }
+
+
         #region Наброски кода
 
         private void UDPtracking(bool start)
@@ -259,7 +296,7 @@ namespace LP_Transport
 
         private void button3_Click(object sender, EventArgs e)
         {
-            leuzaRegReceiver.Stop();
+            leuzaRegReceiver.tcpClientReadPacketStop();
         }
 
         private void Form1_Deactivate(object sender, EventArgs e)
@@ -295,6 +332,13 @@ namespace LP_Transport
         {
             Application.Exit();
         }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+
     }
 
 
