@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="tcpIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.52</Value>
+      <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
     <Setting Name="tcpName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -25,6 +25,9 @@
     </Setting>
     <Setting Name="isModul4" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="stop" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

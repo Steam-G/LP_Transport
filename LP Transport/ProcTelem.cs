@@ -194,7 +194,7 @@ namespace LP_Transport
             RunScan();
 
         }
-        void LoadConfig()
+        public void LoadConfig()
         {
             serverIP = Properties.Settings.Default.tcpIP;
             serverName = Properties.Settings.Default.tcpName;
@@ -251,8 +251,10 @@ namespace LP_Transport
             //string myHost = System.Net.Dns.GetHostName();
             //IPAddress MyIpAddress = System.Net.Dns.GetHostByName(myHost).AddressList[0];
 
-            IPHostEntry ipHostInfo = Dns.Resolve(serverIP);
-            IPAddress MyIpAddress = ipHostInfo.AddressList[0];
+            //IPHostEntry ipHostInfo = Dns.Resolve(serverIP);
+            IPHostEntry ipHostInfo = Dns.GetHostEntry(serverIP);
+            //IPAddress MyIpAddress = ipHostInfo.AddressList[0];
+            IPAddress MyIpAddress = IPAddress.Any;
 
             MySock = new Socket(ipAdresServ.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
@@ -266,6 +268,7 @@ namespace LP_Transport
 
                 while (true)
                 {
+                    
 
                     if (isBeginning)
                     {
@@ -305,6 +308,11 @@ namespace LP_Transport
                         handler.Close();
                         MySock.Close();
                         IsOn = false;
+                        return;
+                    }
+                    if (Properties.Settings.Default.stop)
+                    {
+                        Properties.Settings.Default.stop = false;
                         return;
                     }
                 }//while
@@ -440,7 +448,10 @@ namespace LP_Transport
             }
         }
 
-
+        public void stop()
+        {
+            
+        }
 
     }
 }

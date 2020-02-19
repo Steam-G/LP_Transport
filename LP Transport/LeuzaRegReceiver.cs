@@ -147,6 +147,7 @@ namespace LP_Transport
 
                 while (status)
                 {
+                    
                     TcpClient client = new TcpClient();
                     
                     await client.ConnectAsync(ip, port);
@@ -173,6 +174,11 @@ namespace LP_Transport
                             Def.ZABOI = (decimal)BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514);
                             SmallProperty[1].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 - 1514).ToString("#.##");
                             SmallProperty[2].Value = BitConverter.ToDouble(data, indexOfSubstring + 19 + 8 - 1514).ToString("#.##");
+
+                            _StatusLabel.Text = string.Format("IP: {0}, идет опрос...", ip);
+                            _StatusLabel.Font = new Font(_StatusLabel.Name, 9, FontStyle.Bold);
+                            _StatusLabel.ForeColor = Color.Green;
+
                             break;
                         }
                         //await Task.Delay(1);
@@ -196,7 +202,13 @@ namespace LP_Transport
             }
             catch (SocketException e)
             {
-                MessageBox.Show(e.Message);
+                _StatusLabel.Text = string.Format("Сигнал с {0} потерян... попытка переподключиться", ip);
+                _StatusLabel.Font = new Font(_StatusLabel.Name, 9, FontStyle.Bold);
+                _StatusLabel.ForeColor = Color.Red;
+
+                //MessageBox.Show(e.Message);
+                await Task.Delay(2000);
+                tcpClientReadPacketRestart();
                 //Console.WriteLine("SocketException: {0}", e);
             }
             catch (OperationCanceledException)
@@ -214,7 +226,10 @@ namespace LP_Transport
             }
         }
 
-
+        private void tcpClientReadPacketRestart()
+        {
+            tcpClientReadPacket(SmallProperty[0].Value);
+        }
 
         // не используется, но выглядит наглядно
         private void FindAndReadUDataStorage(byte[] data, StringBuilder response)

@@ -25,7 +25,7 @@ namespace LP_Transport.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.52")]
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
         public string tcpIP {
             get {
                 return ((string)(this["tcpIP"]));
@@ -116,6 +116,18 @@ namespace LP_Transport.Properties {
             }
             set {
                 this["isModul4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool stop {
+            get {
+                return ((bool)(this["stop"]));
+            }
+            set {
+                this["stop"] = value;
             }
         }
     }
