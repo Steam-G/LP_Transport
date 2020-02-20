@@ -67,10 +67,12 @@ namespace LP_Transport
             }
         }
 
-        async public void SearchIP(ComboBox comboBox)
+        async public void SearchIP(ComboBox comboBox, Button button)
         {
             //При поиске IP адресов блокируем выбор и ввод
             comboBox.Enabled = false;
+            button.Enabled = false;
+
             int port = 138;
             UdpClient server = null;
             List<string> bufIP = new List<string>();
@@ -79,11 +81,13 @@ namespace LP_Transport
             try
             {
                 server = new UdpClient(port);
-
+                
                 // Получаем и отдаем сразу. Эхо сервер
                 while (iter<10)
                 {
+                    
                     UdpReceiveResult x = await server.ReceiveAsync();
+                    
                     byte[] bytes = x.Buffer;
 
                     string results = Encoding.UTF8.GetString(bytes);
@@ -101,7 +105,7 @@ namespace LP_Transport
 
                     //Индикатор прогресса поиска адресов
                     iter++;
-                    string progress = new String('.', iter);
+                    string progress = new String('⬛', iter);
                     await Task.Delay(100);
                     comboBox.Text = progress;
 
@@ -122,7 +126,9 @@ namespace LP_Transport
                 if (comboBox.Items.Count == 0) comboBox.Items.Add("не найдено");
                 comboBox.Items.Add("Обновить список");
                 comboBox.SelectedIndex = 0;
+
                 comboBox.Enabled = true;
+                button.Enabled = true;
             }
         }
 

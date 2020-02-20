@@ -37,9 +37,6 @@
             this.smallPropertyBox4 = new Sys_components.SmallPropertyBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -55,7 +52,6 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -79,7 +75,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(345, 142);
+            this.panel2.Size = new System.Drawing.Size(341, 142);
             this.panel2.TabIndex = 108;
             this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
@@ -92,7 +88,7 @@
             this.smallPropertyBox6.Name = "smallPropertyBox6";
             this.smallPropertyBox6.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox6.PropertyName = null;
-            this.smallPropertyBox6.Size = new System.Drawing.Size(334, 28);
+            this.smallPropertyBox6.Size = new System.Drawing.Size(330, 28);
             this.smallPropertyBox6.TabIndex = 5;
             this.smallPropertyBox6.Value = null;
             // 
@@ -105,7 +101,7 @@
             this.smallPropertyBox5.Name = "smallPropertyBox5";
             this.smallPropertyBox5.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox5.PropertyName = null;
-            this.smallPropertyBox5.Size = new System.Drawing.Size(334, 28);
+            this.smallPropertyBox5.Size = new System.Drawing.Size(330, 28);
             this.smallPropertyBox5.TabIndex = 4;
             this.smallPropertyBox5.Value = null;
             // 
@@ -118,7 +114,7 @@
             this.smallPropertyBox4.Name = "smallPropertyBox4";
             this.smallPropertyBox4.Padding = new System.Windows.Forms.Padding(1);
             this.smallPropertyBox4.PropertyName = null;
-            this.smallPropertyBox4.Size = new System.Drawing.Size(334, 28);
+            this.smallPropertyBox4.Size = new System.Drawing.Size(330, 28);
             this.smallPropertyBox4.TabIndex = 3;
             this.smallPropertyBox4.Value = null;
             // 
@@ -136,48 +132,18 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Size = new System.Drawing.Size(764, 142);
-            this.splitContainer1.SplitterDistance = 345;
+            this.splitContainer1.Size = new System.Drawing.Size(555, 142);
+            this.splitContainer1.SplitterDistance = 341;
             this.splitContainer1.TabIndex = 109;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(415, 142);
+            this.panel1.Size = new System.Drawing.Size(210, 142);
             this.panel1.TabIndex = 110;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Location = new System.Drawing.Point(209, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 95);
-            this.groupBox2.TabIndex = 8;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Подключение к ПО \"Проводка\"";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(6, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(188, 20);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "127.0.0.1";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(6, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(188, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Запустить передачу";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // groupBox1
             // 
@@ -205,7 +171,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 120);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(764, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(555, 22);
             this.statusStrip1.TabIndex = 110;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -214,7 +180,7 @@
             this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(718, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(540, 17);
             this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
@@ -260,11 +226,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 142);
+            this.ClientSize = new System.Drawing.Size(555, 142);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(780, 180);
+            this.MinimumSize = new System.Drawing.Size(570, 180);
             this.Name = "Form1";
             this.Text = "LP Transport";
             this.Deactivate += new System.EventHandler(this.Form1_Deactivate);
@@ -275,8 +241,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -297,15 +261,12 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem openMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
