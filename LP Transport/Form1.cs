@@ -38,8 +38,14 @@ namespace LP_Transport
                 panel2.Controls[i].DataBindings.Add("Value", leuzaRegReceiver.SmallProperty[i], "Value", true, DataSourceUpdateMode.OnPropertyChanged);
             }
 
+            comboBox1.Items.Add(Properties.Settings.Default.defaultIP);
+            //проверка, есть ли в списке localhost и если нет
+            if (comboBox1.Items.IndexOf("localhost")<0 && comboBox1.Items.IndexOf("127.0.0.1") < 0) comboBox1.Items.Add("localhost");
+            comboBox1.Items.Add("Обновить список");
+            comboBox1.SelectedIndex = 0;
+
             //Запускаем прослушивание UDP пакетов на 138 порту, IP адреса всех соответствующих некоторым критериям источников заносим в список
-            leuzaRegReceiver.SearchIP(comboBox1,button1);
+            //leuzaRegReceiver.SearchIP(comboBox1,button1);
 
             toolStripStatusLabel1.Text = "Дождитесь получения списка доступных IP адресов и осуществите подключение.";
 
@@ -55,7 +61,8 @@ namespace LP_Transport
                 b.Text = "Остановить прием";
   
                 //leuzaRegReceiver.UDPtracking(true);
-                leuzaRegReceiver.tcpClientReadPacket(comboBox1.SelectedItem.ToString());
+                //leuzaRegReceiver.tcpClientReadPacket(comboBox1.SelectedItem.ToString());
+                leuzaRegReceiver.tcpClientReadPacket(comboBox1.Text);
 
                 //Заблокируем выбор IP адреса, пока опрос не будет остановлен
                 comboBox1.Enabled = false;

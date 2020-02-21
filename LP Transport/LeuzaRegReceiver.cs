@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace LP_Transport
@@ -67,6 +68,7 @@ namespace LP_Transport
             }
         }
 
+        UdpClient server = null;
         async public void SearchIP(ComboBox comboBox, Button button)
         {
             //При поиске IP адресов блокируем выбор и ввод
@@ -74,7 +76,7 @@ namespace LP_Transport
             button.Enabled = false;
 
             int port = 138;
-            UdpClient server = null;
+           
             List<string> bufIP = new List<string>();
             int iter = 0;
 
@@ -85,33 +87,49 @@ namespace LP_Transport
                 // Получаем и отдаем сразу. Эхо сервер
                 while (iter<10)
                 {
-                    
-                    UdpReceiveResult x = await server.ReceiveAsync();
-                    
-                    byte[] bytes = x.Buffer;
-
-                    string results = Encoding.UTF8.GetString(bytes);
-
-                    string subString = @"\MAILSLOT\chromatograph";
-                    int indexOfSubstring = results.IndexOf(subString); // равно 6
-
-                    if (indexOfSubstring > 0)
+                    try
                     {
-                        string ipServer = x.RemoteEndPoint.Address.ToString();
+                        using (tConnectTimeout = new System.Timers.Timer(1000))
+                        {
+                            tConnectTimeout.Elapsed += new System.Timers.ElapsedEventHandler(tConnectTimeout_Elapsed);
+                            tConnectTimeout.Start();
+                            UdpReceiveResult x = await server.ReceiveAsync();
 
-                        bufIP.Add(ipServer);
+                            byte[] bytes = x.Buffer;
 
+                            string results = Encoding.UTF8.GetString(bytes);
+
+                            string subString = @"\MAILSLOT\chromatograph";
+                            int indexOfSubstring = results.IndexOf(subString); // равно 6
+
+                            if (indexOfSubstring > 0)
+                            {
+                                string ipServer = x.RemoteEndPoint.Address.ToString();
+
+                                bufIP.Add(ipServer);
+
+                            }
+                        }
                     }
+                    catch (ObjectDisposedException ex)
+                    {
+                        server = new UdpClient(port);
+                        //MessageBox.Show(ex.Message);
+                    }
+
+                    tConnectTimeout.Stop();
+                    tConnectTimeout.Dispose();
 
                     //Индикатор прогресса поиска адресов
                     iter++;
                     string progress = new String('⬛', iter);
                     await Task.Delay(100);
                     comboBox.Text = progress;
-
+                    
                 }
                         return;
             }
+            
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
@@ -124,16 +142,28 @@ namespace LP_Transport
                 comboBox.Items.Clear();
                 comboBox.Items.AddRange(IPList.ToArray());
                 if (comboBox.Items.Count == 0) comboBox.Items.Add("не найдено");
+                comboBox.Items.Add("localhost");
                 comboBox.Items.Add("Обновить список");
                 comboBox.SelectedIndex = 0;
 
                 comboBox.Enabled = true;
                 button.Enabled = true;
+
+                
             }
         }
 
+        private void tConnectTimeout_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            server.Close();
+
+            tConnectTimeout.Stop();
+            tConnectTimeout.Dispose();
+            //throw new NotImplementedException();
+        }
+
         bool status = true;
-        
+        private System.Timers.Timer tConnectTimeout;
 
         async public void tcpClientReadPacket(string ip)
         {
@@ -185,6 +215,10 @@ namespace LP_Transport
                             _StatusLabel.Font = new Font(_StatusLabel.Name, 9, FontStyle.Bold);
                             _StatusLabel.ForeColor = Color.Green;
 
+                            // Сохраним в параметрах этот IP
+                            Properties.Settings.Default.defaultIP = ip;
+                            Properties.Settings.Default.Save();
+
                             break;
                         }
                         //await Task.Delay(1);
@@ -227,6 +261,10 @@ namespace LP_Transport
             }
             catch (Exception e)
             {
+                _StatusLabel.Text = string.Format("Помехи при приеме от {0} ", ip);
+                _StatusLabel.Font = new Font(_StatusLabel.Name, 9, FontStyle.Bold);
+                _StatusLabel.ForeColor = Color.DarkRed;
+
                 MessageBox.Show(e.Message);
                 //Console.WriteLine("Exception: {0}", e.Message);
             }

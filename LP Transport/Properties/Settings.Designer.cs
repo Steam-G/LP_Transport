@@ -130,5 +130,17 @@ namespace LP_Transport.Properties {
                 this["stop"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        public string defaultIP {
+            get {
+                return ((string)(this["defaultIP"]));
+            }
+            set {
+                this["defaultIP"] = value;
+            }
+        }
     }
 }
