@@ -39,9 +39,9 @@ namespace LP_Transport
             }
 
             //Запускаем прослушивание UDP пакетов на 138 порту, IP адреса всех соответствующих некоторым критериям источников заносим в список
-            leuzaRegReceiver.SearchIP(comboBox1);
+            leuzaRegReceiver.SearchIP(comboBox1,button1);
 
-            toolStripStatusLabel1.Text = "Для работы запустите прием данных и укажите ip Проводки для переправки данных";
+            toolStripStatusLabel1.Text = "Дождитесь получения списка доступных IP адресов и осуществите подключение.";
 
             ProcTelem = new ProcTelem();
         }
@@ -77,41 +77,6 @@ namespace LP_Transport
                 //toolStripStatusLabel1.ForeColor = Color.Gray;
             }
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            // работа параметрами кнопки, на которую нажали
-            var b = sender as Button;
-            if (b.Text == "Запустить передачу")
-            {
-                b.Text = "Остановить передачу";
-
-                Properties.Settings.Default.tcpIP = textBox1.Text;
-                //Properties.Settings.Default.stop = false;
-                //ProcTelem = new ProcTelem();
-
-                //Заблокируем выбор IP адреса, пока опрос не будет остановлен
-                textBox1.Enabled = false;
-
-                // При старте в строке состояния должно быть зеленое сообщение, полужирным шрифтом
-                //toolStripStatusLabel1.Text = string.Format("IP: {0}, идет опрос...", leuzaRegReceiver.SmallProperty[0].Value);
-                //toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Bold);
-                //toolStripStatusLabel1.ForeColor = Color.Green;
-            }
-            else
-            {
-                b.Text = "Запустить передачу";
-                Properties.Settings.Default.stop = true;
-                //ProcTelem.closeLog();
-                //ProcTelem.IsOn = false;
-                textBox1.Enabled = true;
-                // По остановке опроса сообщение в строке состояния будет перекрашено в серый цвет и изменится на обычный вид
-                //toolStripStatusLabel1.Text = string.Format("IP: {0}, опрос завершен.", leuzaRegReceiver.SmallProperty[0].Value);
-                //toolStripStatusLabel1.Font = new Font(toolStripStatusLabel1.Name, 9, FontStyle.Regular);
-                //toolStripStatusLabel1.ForeColor = Color.Gray;
-            }
-        }
-
 
         #region Наброски кода
 
@@ -292,7 +257,7 @@ namespace LP_Transport
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem.ToString() == "Обновить список") leuzaRegReceiver.SearchIP((ComboBox)sender);
+            if (comboBox1.SelectedItem.ToString() == "Обновить список") leuzaRegReceiver.SearchIP((ComboBox)sender, button1);
         }
 
         private void button3_Click(object sender, EventArgs e)

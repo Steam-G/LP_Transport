@@ -337,7 +337,9 @@ namespace LP_Transport
         BinaryWriter writerLog;
         public void InitLog()
         {
-            string fileName = "c:\\sensor\\logTelLeuza.txt";
+            //string fileName = "c:\\sensor\\logTelLeuza.txt";
+            //string fileName = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string fileName = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)+ "\\logTelLeuza.txt";
             log = File.Create(fileName);
             writerLog = new BinaryWriter(log, Encoding.Default);
         }
