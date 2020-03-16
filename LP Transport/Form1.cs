@@ -31,6 +31,9 @@ namespace LP_Transport
             leuzaRegReceiver.Init();
             leuzaRegReceiver.StatusLabel = toolStripStatusLabel1;
 
+            //Скроем иконку в трее
+            notifyIcon1.Visible = false;
+
             // Привязка элементов на экране к элементам объекта
             for (int i = 0; i < leuzaRegReceiver.SmallProperty.Count; i++)
             {
@@ -279,16 +282,13 @@ namespace LP_Transport
                 this.ShowInTaskbar = false;
                 notifyIcon1.Visible = true;
             }
+            //показ всплывающего окна с сообщением из трея
+            notifyIcon1.ShowBalloonTip(500, "LP Transport", "LP Transport свернут, нажмите, чтобы открыть снова, правой кнопкой мыши - чтобы закрыть", ToolTipIcon.Info);
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-            }
+            
         }
 
         private void openMenuItem_Click(object sender, EventArgs e)
@@ -311,7 +311,17 @@ namespace LP_Transport
 
         }
 
-
+        private void notifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+            }
+           
+        }
     }
 
 

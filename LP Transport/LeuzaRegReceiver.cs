@@ -122,7 +122,7 @@ namespace LP_Transport
 
                     //Индикатор прогресса поиска адресов
                     iter++;
-                    string progress = new String('⬛', iter);
+                    string progress = new String('▐', iter);
                     await Task.Delay(100);
                     comboBox.Text = progress;
                     
